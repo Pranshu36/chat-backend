@@ -1,11 +1,18 @@
-import type { Request, Response } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
 
 import { env } from '../configs/env';
 import type { ApiErrorResponse } from '../types/response.types';
 import { ApiError } from '../utils/apiError.util';
 
-export const errorHandler = (err: unknown, _req: Request, res: Response) => {
+export const errorHandler = (
+  err: unknown,
+  _req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  void next;
+
   if (err instanceof ApiError) {
     const response: ApiErrorResponse = {
       success: false,
